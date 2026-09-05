@@ -158,7 +158,10 @@ export default function LoginPage() {
         const res = await fetch(`${API_URL}/auth/google`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ access_token: tokenResponse.access_token }),
+          body: JSON.stringify({ 
+            access_token: tokenResponse.access_token,
+            role: selectedRole 
+          }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Google login failed");
@@ -172,9 +175,13 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-black p-4 relative overflow-hidden">
-      {/* Background aesthetics */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
+    <div className="min-h-screen w-full flex items-center justify-center bg-slate-950 p-4 relative overflow-hidden">
+      {/* Aesthetic Background Grid & Lighting */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px] pointer-events-none mix-blend-screen" />
+      </div>
       
       <div className="z-10 w-full max-w-4xl flex flex-col items-center">
         <div className="mb-8 text-center">

@@ -121,7 +121,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 export const googleLogin = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { access_token } = req.body;
+    const { access_token, role } = req.body;
     if (!access_token) {
       res.status(400).json({ error: 'Google access_token is required' });
       return;
@@ -154,8 +154,14 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
           email,
           name: name || 'Google User',
           password: '', // No password for OAuth users
-          role: 'PHC_STAFF', // Defaulting to PHC_STAFF so they can see the dashboard during demo
+          role: role || 'PHC_STAFF', // Defaulting to PHC_STAFF so they can see the dashboard during demo
         }
+      });
+    } else if (role && user.role !== role) {
+      // For hackathon demo: allow Google users to switch roles by picking a different portal
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: { role: role }
       });
     }
 

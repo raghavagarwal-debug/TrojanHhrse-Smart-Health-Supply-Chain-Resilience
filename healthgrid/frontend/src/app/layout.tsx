@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Sidebar } from "@/components/layout/sidebar";
-import { Topbar } from "@/components/layout/topbar";
+import { AppShell } from "@/components/layout/app-shell";
 import QueryProvider from "@/components/query-provider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,17 +27,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>
-            <div className="flex h-full w-full">
-              <Sidebar />
-              <div className="flex flex-col flex-1 min-w-0">
-                <Topbar />
-                <main className="flex-1 overflow-y-auto bg-muted/20 p-6">
-                  {children}
-                </main>
-              </div>
-            </div>
-          </QueryProvider>
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+            <QueryProvider>
+              <AppShell>
+                {children}
+              </AppShell>
+            </QueryProvider>
+          </GoogleOAuthProvider>
         </ThemeProvider>
       </body>
     </html>

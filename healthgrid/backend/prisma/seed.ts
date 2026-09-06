@@ -104,7 +104,7 @@ async function main() {
 
       await prisma.inventory.create({
         data: {
-          phcId: phc.id,
+          facility_id: phc.id,
           medicineId: m.id,
           currentStock: stock,
           dailyConsumption: p.name.includes('Rampur') ? 35 : 10,
@@ -132,7 +132,7 @@ async function main() {
   if (rampur) {
     await prisma.alert.create({
       data: {
-        phcId: rampur.id,
+        facility_id: rampur.id,
         title: 'Medicine Shortage Predicted',
         severity: 'CRITICAL',
         reason: 'Amoxicillin predicted to run out in 2.4 days due to +23% patient surge.',

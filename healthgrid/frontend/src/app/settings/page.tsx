@@ -23,7 +23,7 @@ export default function SettingsPage() {
             { name: "Data Synchronization", icon: Database, active: false },
             { name: "Alert Preferences", icon: Bell, active: false },
           ].map((tab, i) => (
-            <button key={i} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${tab.active ? 'bg-slate-800 text-white' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'}`}>
+            <button key={i} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${tab.active ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white' : 'text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-slate-200'}`}>
               <tab.icon className="h-4 w-4" />
               {tab.name}
             </button>
@@ -32,7 +32,7 @@ export default function SettingsPage() {
 
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-slate-900/40 border-slate-800">
+          <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800">
             <CardHeader>
               <CardTitle>Generative AI Integration</CardTitle>
               <CardDescription>Configure Google Gemini API for predictive analytics and natural language risk explanations.</CardDescription>
@@ -41,15 +41,15 @@ export default function SettingsPage() {
               <div className="space-y-2">
                 <Label htmlFor="gemini">Gemini API Key</Label>
                 <div className="flex gap-2">
-                  <Input id="gemini" type="password" value="****************************************" readOnly className="bg-slate-900 border-slate-700 font-mono text-slate-500" />
-                  <Button variant="outline" className="border-slate-700">Edit</Button>
+                  <Input id="gemini" type="password" value="****************************************" readOnly className="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 font-mono text-slate-500" />
+                  <Button variant="outline" className="border-slate-200 dark:border-slate-700">Edit</Button>
                 </div>
                 <p className="text-xs text-slate-500 mt-1">Currently using `gemini-2.5-flash` model.</p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-900/40 border-slate-800">
+          <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800">
             <CardHeader>
               <CardTitle>Mapbox & GIS Services</CardTitle>
               <CardDescription>Keys required for advanced routing optimization and Isochrone maps.</CardDescription>
@@ -57,12 +57,12 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="mapbox">Mapbox Access Token (Optional)</Label>
-                <Input id="mapbox" placeholder="pk.eyJ1..." className="bg-slate-900 border-slate-700 font-mono" />
+                <Input id="mapbox" placeholder="pk.eyJ1..." className="bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 font-mono" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-900/40 border-slate-800">
+          <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800">
             <CardHeader>
               <CardTitle>System Preferences</CardTitle>
             </CardHeader>

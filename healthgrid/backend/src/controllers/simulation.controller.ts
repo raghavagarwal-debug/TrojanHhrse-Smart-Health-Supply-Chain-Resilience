@@ -6,7 +6,7 @@ export const runSimulation = async (req: Request, res: Response) => {
     const { scenario, severity, duration } = req.body;
     // Mock simulation logic
     // We will just artificially inflate demand for antibiotics and increase footfall
-    const phcs = await prisma.pHC.findMany({ include: { district: true } });
+    const phcs = await prisma.pHC.findMany({ include: { districtRel: true } });
     
     const impactResults = phcs.map((phc) => {
       let riskIncrease = 0;

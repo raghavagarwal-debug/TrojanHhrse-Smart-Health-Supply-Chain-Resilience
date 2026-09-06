@@ -18,7 +18,7 @@ export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction)
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecret_jwt_key_for_healthgrid') as any;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'supersecret_jwt_key_for_arogyapulse') as any;
     req.user = decoded;
     next();
   } catch (error) {

@@ -175,7 +175,7 @@ export default function LoginPage() {
   });
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-slate-950 p-4 relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 dark:bg-slate-950 p-4 relative overflow-hidden">
       {/* Aesthetic Background Grid & Lighting */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
@@ -189,9 +189,9 @@ export default function LoginPage() {
             <div className="bg-blue-600 p-2 rounded-lg">
               <Globe className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold tracking-tight text-white">HEALTH<span className="text-blue-500">GRID</span></h1>
+            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">AROGYA<span className="text-blue-500">PULSE</span></h1>
           </div>
-          <p className="text-slate-400 text-lg">
+          <p className="text-slate-600 dark:text-slate-400 text-lg">
             National Health Intelligence & Resource Resilience Platform
           </p>
         </div>
@@ -199,8 +199,8 @@ export default function LoginPage() {
         {!selectedRole ? (
           <div className="w-full">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-semibold text-white mb-2">Select Your Authority</h2>
-              <p className="text-slate-400">Choose your role to proceed to the authentication portal.</p>
+              <h2 className="text-2xl font-semibold text-slate-900 dark:text-white mb-2">Select Your Authority</h2>
+              <p className="text-slate-600 dark:text-slate-400">Choose your role to proceed to the authentication portal.</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -208,29 +208,29 @@ export default function LoginPage() {
                 <Card 
                   key={role.id}
                   onClick={() => setSelectedRole(role.id)}
-                  className="bg-slate-950/80 backdrop-blur border-slate-800 hover:border-slate-600 transition-all cursor-pointer group hover:bg-slate-900/80"
+                  className="bg-white/80 dark:bg-slate-950/80 backdrop-blur border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600 transition-all cursor-pointer group hover:bg-slate-50/80 dark:hover:bg-slate-900/80"
                 >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
                       <div className={cn("p-2 rounded-lg border", role.bg, role.color, role.border)}>
                         <role.icon className="h-5 w-5" />
                       </div>
-                      <ArrowRight className="h-5 w-5 text-slate-600 group-hover:text-white transition-colors" />
+                      <ArrowRight className="h-5 w-5 text-slate-400 dark:text-slate-600 group-hover:text-slate-900 dark:group-hover:text-white transition-colors" />
                     </div>
-                    <CardTitle className="text-lg text-white">{role.title}</CardTitle>
-                    <CardDescription className="text-slate-400">{role.desc}</CardDescription>
+                    <CardTitle className="text-lg text-slate-900 dark:text-white">{role.title}</CardTitle>
+                    <CardDescription className="text-slate-600 dark:text-slate-400">{role.desc}</CardDescription>
                   </CardHeader>
                 </Card>
               ))}
             </div>
           </div>
         ) : (
-          <Card className="w-full max-w-md bg-slate-950/80 backdrop-blur border-slate-800 relative">
+          <Card className="w-full max-w-md bg-white/80 dark:bg-slate-950/80 backdrop-blur border-slate-200 dark:border-slate-800 relative">
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={() => setSelectedRole(null)}
-              className="absolute left-4 top-4 text-slate-400 hover:text-white"
+              className="absolute left-4 top-4 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
             >
               <ChevronLeft className="h-4 w-4 mr-1" /> Back
             </Button>
@@ -238,7 +238,7 @@ export default function LoginPage() {
             <CardHeader className="text-center pb-2 mt-8">
               <CardTitle>Authenticate</CardTitle>
               <CardDescription>
-                Portal: <span className="text-white font-medium">{ROLES.find(r => r.id === selectedRole)?.title}</span>
+                Portal: <span className="text-slate-900 dark:text-white font-medium">{ROLES.find(r => r.id === selectedRole)?.title}</span>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -250,7 +250,7 @@ export default function LoginPage() {
               )}
 
               <Tabs defaultValue="login" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-900">
+                <TabsList className="grid w-full grid-cols-2 mb-6 bg-slate-100 dark:bg-slate-900">
                   <TabsTrigger value="login">Sign In</TabsTrigger>
                   <TabsTrigger value="register">Sign Up</TabsTrigger>
                 </TabsList>
@@ -258,37 +258,37 @@ export default function LoginPage() {
                 <TabsContent value="login">
                   <form onSubmit={handleManualLogin} className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-slate-300 uppercase tracking-wider">Email</label>
+                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">Email</label>
                       <input 
                         type="email" 
                         required
                         value={loginEmail}
                         onChange={e => setLoginEmail(e.target.value)}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
                         placeholder="Enter your email"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-slate-300 uppercase tracking-wider">Password</label>
+                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">Password</label>
                       <div className="relative">
                         <input 
                           type={showLoginPassword ? "text" : "password"} 
                           required
                           value={loginPassword}
                           onChange={e => setLoginPassword(e.target.value)}
-                          className="w-full bg-slate-900 border border-slate-800 rounded-md pl-3 pr-10 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md pl-3 pr-10 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
                           placeholder="••••••••"
                         />
                         <button
                           type="button"
                           onClick={() => setShowLoginPassword(!showLoginPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
                         >
                           {showLoginPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
                     </div>
-                    <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-500 mt-2">
+                    <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-500 text-white mt-2">
                       {loading ? "Authenticating..." : "Sign In"}
                     </Button>
                   </form>
@@ -297,48 +297,48 @@ export default function LoginPage() {
                 <TabsContent value="register">
                   <form onSubmit={handleRegister} className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-slate-300 uppercase tracking-wider">Full Name</label>
+                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">Full Name</label>
                       <input 
                         type="text" 
                         required
                         value={regName}
                         onChange={e => setRegName(e.target.value)}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
                         placeholder="John Doe"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-slate-300 uppercase tracking-wider">Email</label>
+                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">Email</label>
                       <input 
                         type="email" 
                         required
                         value={regEmail}
                         onChange={e => setRegEmail(e.target.value)}
-                        className="w-full bg-slate-900 border border-slate-800 rounded-md px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
-                        placeholder="john@healthgrid.in"
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md px-3 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
+                        placeholder="john@arogyapulse.in"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-medium text-slate-300 uppercase tracking-wider">Password</label>
+                      <label className="text-xs font-medium text-slate-700 dark:text-slate-300 uppercase tracking-wider">Password</label>
                       <div className="relative">
                         <input 
                           type={showRegPassword ? "text" : "password"} 
                           required
                           value={regPassword}
                           onChange={e => setRegPassword(e.target.value)}
-                          className="w-full bg-slate-900 border border-slate-800 rounded-md pl-3 pr-10 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                          className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md pl-3 pr-10 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-blue-500"
                           placeholder="••••••••"
                         />
                         <button
                           type="button"
                           onClick={() => setShowRegPassword(!showRegPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-white"
                         >
                           {showRegPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
                       </div>
                     </div>
-                    <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-500 mt-2">
+                    <Button type="submit" disabled={loading} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white mt-2">
                       {loading ? "Registering..." : `Create ${ROLES.find(r => r.id === selectedRole)?.title} Account`}
                     </Button>
                   </form>
@@ -349,10 +349,10 @@ export default function LoginPage() {
             <div className="px-6 pb-6">
               <div className="relative mb-6">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-slate-800" />
+                  <span className="w-full border-t border-slate-200 dark:border-slate-800" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-slate-950 px-2 text-slate-500">Or continue with</span>
+                  <span className="bg-white dark:bg-slate-950 px-2 text-slate-500">Or continue with</span>
                 </div>
               </div>
 
@@ -360,7 +360,7 @@ export default function LoginPage() {
                 <Button 
                   onClick={() => loginWithGoogle()}
                   variant="outline" 
-                  className="w-full bg-slate-900 border-slate-800 hover:bg-slate-800 hover:text-white transition-all h-12 text-sm font-medium"
+                  className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all h-12 text-sm font-medium"
                 >
                   <GoogleIcon />
                   Sign in with Google

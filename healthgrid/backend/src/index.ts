@@ -9,6 +9,8 @@ import alertRoutes from './routes/alert.routes';
 import simulationRoutes from './routes/simulation.routes';
 import aiRoutes from './routes/ai.routes';
 import authRoutes from './routes/auth.routes';
+import mlRoutes from './routes/ml.routes';
+import reportRoutes from './routes/report.routes';
 
 dotenv.config();
 
@@ -26,7 +28,9 @@ app.use('/api/phcs', phcRoutes);
 app.use('/api/alerts', alertRoutes);
 app.use('/api/simulation', simulationRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/ml', mlRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/reports', reportRoutes); // POST /api/reports, POST /api/reports/vaccination
 
 // Health Check
 app.get('/health', async (req, res) => {
@@ -51,5 +55,5 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 HEALTHGRID Backend running on http://localhost:${PORT}`);
+  console.log(`🚀 AROGYAPULSE Backend running on http://localhost:${PORT}`);
 });

@@ -8,23 +8,29 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      Role     @default(PHC_STAFF)
-  phcId     String?
-  phc       PHC?     @relation(fields: [phcId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String   @map("password")
+  name          String
+  role          Role     @default(PHC_STAFF)
+  phcId         String?
+  phc           PHC?     @relation(fields: [phcId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 enum Role {
+  ADMIN
+  DOCTOR
+  FIELD_WORKER
+  PHC_STAFF
+  GOVERNMENT_OFFICIAL
+  
+  // Legacy roles kept for backward compatibility if needed by other parts of the app
   SUPER_ADMIN
   NATIONAL_ADMIN
   STATE_ADMIN
   DISTRICT_ADMIN
-  PHC_STAFF
   SUPPLY_OFFICER
   EMERGENCY_OFFICER
 }
@@ -47,9 +53,13 @@ model District {
 
 model PHC {
   id             String             @id @default(uuid())
+  code           String?            @unique
   name           String
+  state          String?
   districtId     String
-  district       District           @relation(fields: [districtId], references: [id])
+  district_name  String?
+  city           String?
+  districtRel    District           @relation(fields: [districtId], references: [id])
   latitude       Float
   longitude      Float
   population     Int
@@ -63,6 +73,13 @@ model PHC {
   sourceTransfers ResourceTransfer[] @relation("SourceTransfers")
   destTransfers   ResourceTransfer[] @relation("DestTransfers")
   patientVisits  PatientVisit[]
+  
+  healthReports      HealthReport[]
+  diseaseReports     DiseaseReport[]
+  vaccinationRecords VaccinationRecord[]
+  mlPredictions      MLPrediction[]
+  
+  createdAt DateTime @default(now())
 }
 
 model Medicine {
@@ -73,20 +90,28 @@ model Medicine {
   inventories    Inventory[]
   forecasts      Forecast[]
   transfers      ResourceTransfer[]
+  mlPredictions  MLPrediction[]
 }
 
 model Inventory {
   id               String   @id @default(uuid())
-  phcId            String
-  phc              PHC      @relation(fields: [phcId], references: [id])
+  facility_id      String   @map("phcId")
+  phc              PHC      @relation(fields: [facility_id], references: [id])
   medicineId       String
   medicine         Medicine @relation(fields: [medicineId], references: [id])
+  date             DateTime @default(now())
+  opening_stock    Int      @default(0)
+  received_quantity Int     @default(0)
+  dispensed_quantity Int    @default(0)
+  closing_stock    Int      @default(0)
   currentStock     Int
   dailyConsumption Float
   reorderLevel     Int
   updatedAt        DateTime @updatedAt
 
-  @@unique([phcId, medicineId])
+  @@unique([facility_id, medicineId])
+  @@index([facility_id])
+  @@index([date])
 }
 
 model BedCapacity {
@@ -134,14 +159,19 @@ model RiskScore {
 
 model Alert {
   id          String   @id @default(uuid())
-  phcId       String
-  phc         PHC      @relation(fields: [phcId], references: [id])
-  title       String
-  severity    String // CRITICAL, WARNING, INFO
-  reason      String
+  facility_id String   @map("phcId")
+  phc         PHC      @relation(fields: [facility_id], references: [id])
+  title       String?
+  alert_type  String?
+  severity    String // CRITICAL, HIGH, WARNING, INFO, WATCH
+  message     String?
+  reason      String?
+  resolved    Boolean  @default(false)
   status      String   @default("ACTIVE") // ACTIVE, RESOLVED
   createdAt   DateTime @default(now())
   resolvedAt  DateTime?
+  
+  @@index([facility_id])
 }
 
 model ResourceTransfer {
@@ -166,4 +196,70 @@ model PatientVisit {
   date      DateTime
   count     Int
   disease   String?
+}
+
+// --------------------------------------------------
+// NEW MODELS REQUESTED BY USER
+// --------------------------------------------------
+
+model HealthReport {
+  id                   String   @id @default(uuid())
+  facility_id          String
+  phc                  PHC      @relation(fields: [facility_id], references: [id])
+  report_date          DateTime @default(now())
+  patient_count        Int      @default(0)
+  disease_cases        Int      @default(0)
+  mortality            Int      @default(0)
+  bed_occupancy        Float    @default(0.0)
+  vaccination_coverage Float    @default(0.0)
+  
+  @@index([facility_id])
+  @@index([report_date])
+}
+
+model DiseaseReport {
+  id               String   @id @default(uuid())
+  facility_id      String
+  phc              PHC      @relation(fields: [facility_id], references: [id])
+  disease          String
+  suspected_cases  Int      @default(0)
+  confirmed_cases  Int      @default(0)
+  mortality        Int      @default(0)
+  report_date      DateTime @default(now())
+  
+  @@index([facility_id])
+  @@index([report_date])
+}
+
+model VaccinationRecord {
+  id                  String   @id @default(uuid())
+  facility_id         String
+  phc                 PHC      @relation(fields: [facility_id], references: [id])
+  vaccine             String
+  doses_administered  Int      @default(0)
+  target_population   Int      @default(0)
+  coverage            Float    @default(0.0)
+  date                DateTime @default(now())
+  
+  @@index([facility_id])
+  @@index([date])
+}
+
+model MLPrediction {
+  id                       String   @id @default(uuid())
+  facility_id              String
+  phc                      PHC      @relation(fields: [facility_id], references: [id])
+  medicine_id              String
+  medicine                 Medicine @relation(fields: [medicine_id], references: [id])
+  predicted_7_day_demand   Float
+  stockout_probability     Float
+  risk_level               String   // LOW, MEDIUM, HIGH, CRITICAL
+  estimated_days_of_stock  Float
+  predicted_shortage_units Int
+  model_version            String   @default("v1.0")
+  created_at               DateTime @default(now())
+  
+  @@index([facility_id])
+  @@index([risk_level])
+  @@index([created_at])
 }

@@ -18,10 +18,10 @@ export default function AnalyticsPage() {
           { title: "Staff Attendance", value: "88.4%", icon: Stethoscope, color: "text-amber-500" },
           { title: "Supply Chain Uptime", value: "99.9%", icon: BarChart3, color: "text-blue-500" }
         ].map((stat, i) => (
-          <Card key={i} className="bg-slate-900/40 border-slate-800 backdrop-blur-sm hover:bg-slate-900/60 transition-colors">
+          <Card key={i} className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 backdrop-blur-sm hover:bg-slate-900/60 transition-colors">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-400">{stat.title}</p>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{stat.title}</p>
                 <div className="text-2xl font-bold text-white mt-1">{stat.value}</div>
               </div>
               <div className={`p-3 rounded-xl bg-slate-800/50 ${stat.color}`}>
@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="bg-slate-900/40 border-slate-800 backdrop-blur-sm">
+        <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 backdrop-blur-sm">
           <CardHeader>
             <CardTitle>Regional Resource Distribution</CardTitle>
             <CardDescription>Percentage of critical supplies allocated per zone.</CardDescription>
@@ -47,10 +47,10 @@ export default function AnalyticsPage() {
             ].map((item, i) => (
               <div key={i} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="font-medium text-slate-300">{item.label}</span>
+                  <span className="font-medium text-slate-700 dark:text-slate-300">{item.label}</span>
                   <span className="text-slate-400">{item.val}%</span>
                 </div>
-                <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                   <div className={`h-full ${item.color}`} style={{ width: `${item.val}%` }} />
                 </div>
               </div>
@@ -58,7 +58,7 @@ export default function AnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-900/40 border-slate-800 backdrop-blur-sm">
+        <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 backdrop-blur-sm">
           <CardHeader>
             <CardTitle>Monthly Patient Footfall</CardTitle>
             <CardDescription>Aggregate hospital visits across the network (Millions).</CardDescription>

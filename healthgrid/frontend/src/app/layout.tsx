@@ -9,7 +9,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HEALTHGRID | National Health Intelligence",
+  title: "AROGYAPULSE | National Health Intelligence",
   description: "National Health Intelligence & Resource Resilience Platform",
 };
 

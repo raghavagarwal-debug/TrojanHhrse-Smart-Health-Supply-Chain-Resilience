@@ -21,16 +21,12 @@ import { cn } from "@/lib/utils";
 
 const routes = [
   { label: "Command Center", icon: LayoutDashboard, href: "/" },
-  { label: "Live Health Map", icon: Map, href: "/map" },
-  { label: "PHC Network", icon: Network, href: "/network" },
+  { label: "Live Risk Map", icon: Map, href: "/risk-map" },
+  { label: "AI Simulator", icon: Activity, href: "/simulator" },
+  { label: "AI Insights", icon: Server, href: "/ai-insights" },
   { label: "Inventory Intelligence", icon: Package, href: "/inventory" },
   { label: "Demand Forecasts", icon: TrendingUp, href: "/forecasts" },
   { label: "Risk & Alerts", icon: AlertTriangle, href: "/alerts" },
-  { label: "Resource Optimizer", icon: GitMerge, href: "/optimizer" },
-  { label: "Emergency Simulator", icon: Activity, href: "/simulator" },
-  { label: "Digital Twin", icon: Server, href: "/twin" },
-  { label: "Federated AI", icon: Network, href: "/federated" },
-  { label: "Analytics", icon: BarChart3, href: "/analytics" },
   { label: "Reports", icon: FileText, href: "/reports" },
   { label: "Settings", icon: Settings, href: "/settings" },
 ];
@@ -60,17 +56,17 @@ export function Sidebar() {
     if (!user) return routes;
 
     const role = user.role;
-    if (role === "NATIONAL_ADMIN" || role === "STATE_ADMIN" || role === "DISTRICT_ADMIN") {
+    if (role === "NATIONAL_ADMIN" || role === "STATE_ADMIN" || role === "DISTRICT_ADMIN" || role === "ADMIN") {
       return routes;
     }
-    if (role === "PHC_STAFF") {
-      return routes.filter(r => ["/", "/inventory", "/portal", "/settings"].includes(r.href));
+    if (role === "PHC_STAFF" || role === "DOCTOR") {
+      return routes.filter(r => ["/", "/inventory", "/reports", "/settings"].includes(r.href));
     }
-    if (role === "SUPPLY_OFFICER") {
-      return routes.filter(r => ["/", "/inventory", "/optimizer", "/network", "/settings"].includes(r.href));
+    if (role === "SUPPLY_OFFICER" || role === "FIELD_WORKER") {
+      return routes.filter(r => ["/", "/inventory", "/forecasts", "/settings"].includes(r.href));
     }
-    if (role === "EMERGENCY_OFFICER") {
-      return routes.filter(r => ["/", "/map", "/alerts", "/simulator", "/settings"].includes(r.href));
+    if (role === "EMERGENCY_OFFICER" || role === "GOVERNMENT_OFFICIAL") {
+      return routes.filter(r => ["/", "/risk-map", "/alerts", "/simulator", "/settings"].includes(r.href));
     }
     return routes; // Fallback
   };
@@ -84,7 +80,7 @@ export function Sidebar() {
           <Activity className="h-6 w-6 text-white" />
         </div>
         <div>
-          <h1 className="text-xl font-bold tracking-tight">HEALTHGRID</h1>
+          <h1 className="text-xl font-bold tracking-tight">AROGYAPULSE</h1>
           <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">National Intelligence</p>
         </div>
       </div>

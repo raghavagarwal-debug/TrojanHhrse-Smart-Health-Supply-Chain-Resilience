@@ -1,7 +1,7 @@
 {
-  "name": "healthgrid-backend",
+  "name": "arogyapulse-backend",
   "version": "1.0.0",
-  "description": "HEALTHGRID backend service",
+  "description": "AROGYAPULSE backend service",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",

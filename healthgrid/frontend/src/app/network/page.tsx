@@ -26,9 +26,9 @@ export default function NetworkPage() {
         <div className="flex items-center gap-2">
           <div className="relative w-64">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input type="search" placeholder="Search facilities..." className="pl-8 bg-slate-900/50 border-slate-800" />
+            <Input type="search" placeholder="Search facilities..." className="pl-8 bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800" />
           </div>
-          <Button variant="outline" className="border-slate-800 bg-slate-900/50"><Filter className="h-4 w-4 mr-2" /> Filter</Button>
+          <Button variant="outline" className="border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50"><Filter className="h-4 w-4 mr-2" /> Filter</Button>
         </div>
       </div>
 
@@ -39,9 +39,9 @@ export default function NetworkPage() {
           { title: "Average Readiness", value: "84%", change: "-2% vs last week", color: "text-amber-500" },
           { title: "Total Beds Available", value: "1.2M", change: "82% occupancy", color: "text-emerald-500" },
         ].map((stat, i) => (
-          <Card key={i} className="bg-slate-900/40 border-slate-800 backdrop-blur-sm">
+          <Card key={i} className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 backdrop-blur-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-400">{stat.title}</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">{stat.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
@@ -51,10 +51,10 @@ export default function NetworkPage() {
         ))}
       </div>
 
-      <Card className="bg-slate-900/40 border-slate-800 backdrop-blur-sm overflow-hidden">
+      <Card className="bg-white dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 backdrop-blur-sm overflow-hidden">
         <CardContent className="p-0">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs uppercase bg-slate-900/80 text-slate-400 border-b border-slate-800">
+            <thead className="text-xs uppercase bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-6 py-4">Facility Name</th>
                 <th className="px-6 py-4">Location</th>
@@ -64,7 +64,7 @@ export default function NetworkPage() {
                 <th className="px-6 py-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/50">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800/50">
               {phcs.map((phc) => (
                 <tr key={phc.id} className="hover:bg-slate-800/30 transition-colors">
                   <td className="px-6 py-4">
@@ -73,38 +73,38 @@ export default function NetworkPage() {
                         <Building className="h-4 w-4" />
                       </div>
                       <div>
-                        <div className="font-medium text-slate-200">{phc.name}</div>
+                        <div className="font-medium text-slate-900 dark:text-slate-200">{phc.name}</div>
                         <div className="text-xs text-slate-500">Updated {phc.lastUpdate}</div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <MapPin className="h-3.5 w-3.5 text-slate-500" />
                       {phc.district}, {phc.state}
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Users className="h-3.5 w-3.5 text-slate-500" />
                       {phc.pop.toLocaleString()}
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-slate-300">
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Activity className="h-3.5 w-3.5 text-slate-500" />
                       {phc.beds}
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                      <div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                         <div 
                           className={`h-full ${phc.readiness < 30 ? 'bg-red-500' : phc.readiness < 70 ? 'bg-amber-500' : 'bg-emerald-500'}`} 
                           style={{ width: `${phc.readiness}%` }}
                         />
                       </div>
-                      <span className="text-xs text-slate-400">{phc.readiness}%</span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400">{phc.readiness}%</span>
                     </div>
                   </td>
                   <td className="px-6 py-4">

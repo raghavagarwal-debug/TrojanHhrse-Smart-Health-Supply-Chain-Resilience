@@ -16,7 +16,7 @@ export default function OptimizerPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="border-blue-500/20 shadow-md">
+        <Card className="border-blue-500/20 shadow-md bg-white dark:bg-slate-950">
           <CardHeader className="pb-3 border-b border-muted">
             <div className="flex items-center justify-between">
               <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Recommendation #1</Badge>
@@ -34,7 +34,7 @@ export default function OptimizerPage() {
                 <p className="text-sm text-muted-foreground mt-1 flex items-center justify-center gap-1">
                   <MapPin className="h-3 w-3" /> Jaipur District
                 </p>
-                <div className="mt-3 bg-white p-2 rounded border shadow-sm">
+                <div className="mt-3 bg-white dark:bg-slate-900 p-2 rounded border shadow-sm">
                   <p className="text-xs text-muted-foreground">Available Surplus</p>
                   <p className="font-bold text-emerald-600">600 units</p>
                 </div>
@@ -57,7 +57,7 @@ export default function OptimizerPage() {
                 <p className="text-sm text-muted-foreground mt-1 flex items-center justify-center gap-1">
                   <MapPin className="h-3 w-3" /> Jaipur District
                 </p>
-                <div className="mt-3 bg-white p-2 rounded border shadow-sm">
+                <div className="mt-3 bg-white dark:bg-slate-900 p-2 rounded border shadow-sm">
                   <p className="text-xs text-muted-foreground">Predicted Out</p>
                   <p className="font-bold text-red-600">2.4 days</p>
                 </div>
@@ -80,7 +80,7 @@ export default function OptimizerPage() {
           </CardFooter>
         </Card>
 
-        <Card className="border-muted shadow-sm opacity-70">
+        <Card className="border-muted shadow-sm opacity-70 bg-white dark:bg-slate-950">
           <CardHeader className="pb-3 border-b border-muted">
             <div className="flex items-center justify-between">
               <Badge variant="outline" className="bg-muted text-muted-foreground">Recommendation #2</Badge>

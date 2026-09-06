@@ -5,7 +5,7 @@ export const getPHCs = async (req: Request, res: Response) => {
   try {
     const phcs = await prisma.pHC.findMany({
       include: {
-        district: { include: { state: true } },
+        districtRel: { include: { state: true } },
         bedCapacity: true,
         staff: true,
         riskScores: { orderBy: { createdAt: 'desc' }, take: 1 },
@@ -24,7 +24,7 @@ export const getPHCById = async (req: Request, res: Response) => {
     const phc = await prisma.pHC.findUnique({
       where: { id },
       include: {
-        district: { include: { state: true } },
+        districtRel: { include: { state: true } },
         bedCapacity: true,
         staff: true,
         inventories: {
@@ -74,13 +74,13 @@ export const updateInventory = async (req: Request, res: Response): Promise<void
     // Find or create inventory record
     const inventory = await prisma.inventory.upsert({
       where: {
-        phcId_medicineId: { phcId: id, medicineId: medicineId }
+        facility_id_medicineId: { facility_id: id, medicineId: medicineId }
       },
       update: {
         currentStock: Number(currentStock)
       },
       create: {
-        phcId: id,
+        facility_id: id,
         medicineId: medicineId,
         currentStock: Number(currentStock),
         dailyConsumption: 10,

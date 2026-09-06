@@ -13,12 +13,12 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     // For Hackathon demo purposes, check for predefined demo emails
     const demoAccounts: Record<string, { role: string, name: string }> = {
-      'national@healthgrid.in': { role: 'NATIONAL_ADMIN', name: 'National Admin' },
-      'state@healthgrid.in': { role: 'STATE_ADMIN', name: 'State Admin (Maharashtra)' },
-      'district@healthgrid.in': { role: 'DISTRICT_ADMIN', name: 'District Admin (Jaipur)' },
-      'staff@healthgrid.in': { role: 'PHC_STAFF', name: 'PHC Staff (Rampur)' },
-      'logistics@healthgrid.in': { role: 'SUPPLY_OFFICER', name: 'Supply Officer' },
-      'emergency@healthgrid.in': { role: 'EMERGENCY_OFFICER', name: 'Emergency Officer' },
+      'national@arogyapulse.in': { role: 'NATIONAL_ADMIN', name: 'National Admin' },
+      'state@arogyapulse.in': { role: 'STATE_ADMIN', name: 'State Admin (Maharashtra)' },
+      'district@arogyapulse.in': { role: 'DISTRICT_ADMIN', name: 'District Admin (Jaipur)' },
+      'staff@arogyapulse.in': { role: 'PHC_STAFF', name: 'PHC Staff (Rampur)' },
+      'logistics@arogyapulse.in': { role: 'SUPPLY_OFFICER', name: 'Supply Officer' },
+      'emergency@arogyapulse.in': { role: 'EMERGENCY_OFFICER', name: 'Emergency Officer' },
     };
 
     let user = await prisma.user.findUnique({ where: { email } });
@@ -30,7 +30,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         data: {
           email,
           name: demoAccounts[email].name,
-          password: 'password123',
+          password_hash: 'password123',
           role: demoAccounts[email].role as any,
           phcId: demoAccounts[email].role === 'PHC_STAFF' ? firstPhc?.id : null
         }
@@ -43,7 +43,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Compare bcrypt hash or fallback to raw string for demo accounts
-    const validPassword = password === user.password || password === 'password123' || await bcrypt.compare(password, user.password);
+    const validPassword = password === user.password_hash || password === 'password123' || await bcrypt.compare(password, user.password_hash);
 
     if (!validPassword) {
       res.status(401).json({ error: 'Invalid credentials' });
@@ -92,7 +92,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       data: {
         email,
         name,
-        password: hashedPassword,
+        password_hash: hashedPassword,
         role: role || 'PUBLIC',
       }
     });
@@ -153,7 +153,7 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
         data: {
           email,
           name: name || 'Google User',
-          password: '', // No password for OAuth users
+          password_hash: '', // No password for OAuth users
           role: role || 'PHC_STAFF', // Defaulting to PHC_STAFF so they can see the dashboard during demo
         }
       });

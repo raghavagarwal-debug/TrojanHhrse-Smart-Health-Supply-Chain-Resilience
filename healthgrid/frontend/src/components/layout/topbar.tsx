@@ -1,17 +1,33 @@
 "use client";
 
-import { Bell, Search, Moon, Sun } from "lucide-react";
+import { Menu, Bell, Search, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sidebar } from "./sidebar";
+import { useState } from "react";
 
 export function Topbar() {
   const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-between px-6 sticky top-0 z-50">
       <div className="flex items-center gap-4 flex-1">
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger 
+            render={
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+              </Button>
+            } 
+          />
+          <SheetContent side="left" className="p-0 w-64 border-r-slate-800">
+            <Sidebar />
+          </SheetContent>
+        </Sheet>
         <div className="relative w-96 hidden md:block">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input

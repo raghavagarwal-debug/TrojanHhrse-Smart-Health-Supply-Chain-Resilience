@@ -38,7 +38,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-full w-full">
-      <Sidebar />
+      <div className="hidden md:flex h-full">
+        <Sidebar />
+      </div>
       <div className="flex flex-col flex-1 min-w-0">
         <Topbar />
         <main className="flex-1 overflow-y-auto bg-muted/20 p-6">

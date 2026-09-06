@@ -26,7 +26,7 @@ export default function FederatedAIPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <Card className="md:col-span-2 border-primary/20 bg-card shadow-sm">
+        <Card className="md:col-span-2 border-primary/20 shadow-sm bg-white dark:bg-slate-950">
           <CardHeader className="pb-3 border-b border-muted">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl flex items-center gap-2">
@@ -75,7 +75,7 @@ export default function FederatedAIPage() {
                   { name: 'Maharashtra Node', status: 'Active', acc: '95.0%' },
                   { name: 'Karnataka Node', status: 'Active', acc: '94.8%' },
                 ].map((node, i) => (
-                  <div key={i} className="flex flex-col items-center bg-background border rounded-lg p-3 w-32 shadow-sm text-center">
+                  <div key={i} className="flex flex-col items-center bg-white dark:bg-slate-900 border rounded-lg p-3 w-32 shadow-sm text-center">
                     <Database className="h-5 w-5 text-muted-foreground mb-1" />
                     <p className="text-xs font-bold">{node.name}</p>
                     <div className="flex items-center gap-1 mt-1 text-[10px] text-muted-foreground">
@@ -93,7 +93,7 @@ export default function FederatedAIPage() {
         </Card>
 
         <div className="space-y-6">
-          <Card>
+          <Card className="bg-white dark:bg-slate-950">
             <CardHeader className="pb-3">
               <CardTitle className="text-base">Training Status</CardTitle>
             </CardHeader>
@@ -117,9 +117,9 @@ export default function FederatedAIPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-muted/30 border-muted">
+          <Card className="bg-slate-50 dark:bg-slate-900/50 border-muted">
             <CardContent className="p-4 text-sm text-muted-foreground">
-              By using Federated Learning, HEALTHGRID can train powerful disease outbreak and demand forecasting models across multiple states without ever transferring sensitive patient records or local inventory data to a central server.
+              By using Federated Learning, AROGYAPULSE can train powerful disease outbreak and demand forecasting models across multiple states without ever transferring sensitive patient records or local inventory data to a central server.
             </CardContent>
           </Card>
         </div>

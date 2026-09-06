@@ -10,8 +10,28 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { AlertTriangle, TrendingUp, Users, Building, Activity, CheckCircle2 } from "lucide-react"
+import { useState } from "react"
 
 export default function DistrictAdminDashboard() {
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [isRequesting, setIsRequesting] = useState(false)
+  
+  const [request1Status, setRequest1Status] = useState<"pending" | "approved" | "rejected">("pending")
+  const [request2Status, setRequest2Status] = useState<"pending" | "approved" | "rejected">("pending")
+
+  const handleGenerate = () => {
+    setIsGenerating(true)
+    setTimeout(() => setIsGenerating(false), 1500)
+  }
+
+  const handleRequestAid = () => {
+    setIsRequesting(true)
+    setTimeout(() => {
+      setIsRequesting(false)
+      alert("State Aid Request Submitted successfully.")
+    }, 1500)
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -22,8 +42,12 @@ export default function DistrictAdminDashboard() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline">Generate Report</Button>
-          <Button>Request State Aid</Button>
+          <Button variant="outline" onClick={handleGenerate} disabled={isGenerating}>
+            {isGenerating ? <span className="flex items-center"><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div> Generating...</span> : "Generate Report"}
+          </Button>
+          <Button onClick={handleRequestAid} disabled={isRequesting}>
+            {isRequesting ? <span className="flex items-center"><div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div> Requesting...</span> : "Request State Aid"}
+          </Button>
         </div>
       </div>
 
@@ -97,28 +121,36 @@ export default function DistrictAdminDashboard() {
             <CardDescription>Local PHCs requesting stock replenishment</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-             <div className="flex flex-col gap-2 p-3 border rounded-lg bg-amber-50/50 dark:bg-amber-950/20">
+             <div className={`flex flex-col gap-2 p-3 border rounded-lg transition-all ${request1Status !== 'pending' ? 'opacity-50' : 'bg-amber-50/50 dark:bg-amber-950/20'}`}>
                 <div className="flex justify-between items-center">
-                  <Badge variant="destructive">URGENT</Badge>
+                  <Badge variant={request1Status === 'rejected' ? 'outline' : 'destructive'}>
+                    {request1Status === 'approved' ? 'APPROVED' : request1Status === 'rejected' ? 'REJECTED' : 'URGENT'}
+                  </Badge>
                   <span className="text-xs font-bold">PHC Rampur</span>
                 </div>
                 <p className="text-sm">Requesting 200x Antibiotics (Predicted stockout in &lt;24h)</p>
-                <div className="flex gap-2 mt-2">
-                  <Button size="sm" className="w-full">Approve Dispatch</Button>
-                  <Button size="sm" variant="outline" className="w-full">Reject</Button>
-                </div>
+                {request1Status === 'pending' && (
+                  <div className="flex gap-2 mt-2">
+                    <Button size="sm" className="w-full" onClick={() => setRequest1Status('approved')}>Approve Dispatch</Button>
+                    <Button size="sm" variant="outline" className="w-full" onClick={() => setRequest1Status('rejected')}>Reject</Button>
+                  </div>
+                )}
              </div>
 
-             <div className="flex flex-col gap-2 p-3 border rounded-lg">
+             <div className={`flex flex-col gap-2 p-3 border rounded-lg transition-all ${request2Status !== 'pending' ? 'opacity-50' : ''}`}>
                 <div className="flex justify-between items-center">
-                  <Badge variant="outline">Routine</Badge>
+                  <Badge variant="outline">
+                    {request2Status === 'approved' ? 'APPROVED' : request2Status === 'rejected' ? 'REJECTED' : 'Routine'}
+                  </Badge>
                   <span className="text-xs font-bold">PHC Sitapur</span>
                 </div>
                 <p className="text-sm">Requesting 500x Paracetamol, 100x Bandages</p>
-                <div className="flex gap-2 mt-2">
-                  <Button size="sm" className="w-full">Approve Dispatch</Button>
-                  <Button size="sm" variant="outline" className="w-full">Reject</Button>
-                </div>
+                {request2Status === 'pending' && (
+                  <div className="flex gap-2 mt-2">
+                    <Button size="sm" className="w-full" onClick={() => setRequest2Status('approved')}>Approve Dispatch</Button>
+                    <Button size="sm" variant="outline" className="w-full" onClick={() => setRequest2Status('rejected')}>Reject</Button>
+                  </div>
+                )}
              </div>
           </CardContent>
         </Card>

@@ -59,8 +59,8 @@ export default function PHCStaffDashboard() {
         </div>
         <div className="flex gap-2">
           <Dialog open={logDialogOpen} onOpenChange={setLogDialogOpen}>
-            <DialogTrigger asChild>
-              <Button variant="default">Log Patient Visit</Button>
+            <DialogTrigger render={<Button variant="default" />}>
+              Log Patient Visit
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -88,8 +88,8 @@ export default function PHCStaffDashboard() {
                 </div>
               </div>
               <DialogFooter>
-                <DialogClose asChild>
-                  <Button variant="outline">Cancel</Button>
+                <DialogClose render={<Button variant="outline" />}>
+                  Cancel
                 </DialogClose>
                 <Button onClick={handleLogVisit} disabled={isLogging}>
                   {isLogging ? "Logging..." : "Submit Log"}
